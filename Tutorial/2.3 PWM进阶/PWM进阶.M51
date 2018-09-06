@@ -1,0 +1,94 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        08/04/2017  18:19:03  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V4\C51\BIN\BL51.EXE main.obj TO PWM进阶 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  main.obj (MAIN)
+  C:\KEIL_V4\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  PWM进阶 (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0016H     UNIT         ?PR?PCA_INIT?MAIN
+            CODE    0019H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0025H     0005H     UNIT         ?PR?MAIN?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   PWM进阶 (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN
+  +--> ?PR?PCA_INIT?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  PWM进阶 (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00F9H         PUBLIC        CH
+  D:00A8H         PUBLIC        IE
+  D:00E9H         PUBLIC        CL
+  D:00FAH         PUBLIC        CCAP0H
+  D:00EAH         PUBLIC        CCAP0L
+  B:00D8H.6       PUBLIC        CR
+  D:00DAH         PUBLIC        CCAPM0
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/04/2017  18:19:03  PAGE 2
+
+
+  D:00B8H         PUBLIC        IP
+  D:00D9H         PUBLIC        CMOD
+  D:00D8H         PUBLIC        CCON
+  C:0025H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0003H         PUBLIC        PCA_Init
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:0025H         LINE#         14
+  C:0025H         LINE#         15
+  C:0025H         LINE#         16
+  C:0028H         LINE#         18
+  -------         ENDPROC       MAIN
+  -------         PROC          PCA_INIT
+  C:0003H         LINE#         22
+  C:0003H         LINE#         23
+  C:0003H         LINE#         24
+  C:0006H         LINE#         28
+  C:0008H         LINE#         29
+  C:000AH         LINE#         31
+  C:000DH         LINE#         36
+  C:0013H         LINE#         37
+  C:0016H         LINE#         41
+  C:0018H         LINE#         42
+  -------         ENDPROC       PCA_INIT
+  -------         ENDMOD        MAIN
+
+Program Size: data=9.0 xdata=0 code=42
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

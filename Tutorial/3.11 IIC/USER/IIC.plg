@@ -1,0 +1,86 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Administrator\Desktop\实验板项目\光盘资料\2. 例程\3.11 IIC\USER\IIC.uvproj
+Project File Date:  08/30/2017
+
+<h2>Output:</h2>
+Build target 'IIC'
+compiling main.c...
+MAIN.C(15): warning C206: 'IIC_Init': missing function-prototype
+compiling iic.c...
+..\HARDWARE\IIC\IIC.C(7): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(8): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(9): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(10): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(16): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(17): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(18): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(19): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(30): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(32): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(34): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(35): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(40): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(41): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(42): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(50): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(51): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(55): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(57): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(59): error C202: 'SCL': undefined identifier
+Target not created
+Build target 'IIC'
+compiling main.c...
+compiling iic.c...
+..\HARDWARE\IIC\IIC.C(7): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(8): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(9): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(10): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(16): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(17): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(18): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(19): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(30): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(32): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(34): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(35): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(40): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(41): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(42): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(50): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(51): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(55): error C202: 'SCL': undefined identifier
+..\HARDWARE\IIC\IIC.C(57): error C202: 'SDA': undefined identifier
+..\HARDWARE\IIC\IIC.C(59): error C202: 'SCL': undefined identifier
+Target not created
+Build target 'IIC'
+compiling main.c...
+compiling iic.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?IIC_START?IIC
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?IIC_STOP?IIC
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_IIC_WRITE?IIC
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?IIC_READ?IIC
+Program Size: data=9.0 xdata=0 code=91
+creating hex file from "IIC"...
+"IIC" - 0 Error(s), 4 Warning(s).
+Build target 'IIC'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?IIC_START?IIC
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?IIC_STOP?IIC
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_IIC_WRITE?IIC
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?IIC_READ?IIC
+Program Size: data=9.0 xdata=0 code=91
+creating hex file from "IIC"...
+"IIC" - 0 Error(s), 4 Warning(s).

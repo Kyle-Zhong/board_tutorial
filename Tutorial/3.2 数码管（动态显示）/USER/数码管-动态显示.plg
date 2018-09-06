@@ -1,0 +1,15 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Administrator\Desktop\实验板项目\光盘资料\2. 例程\3.2 数码管（动态显示）\USER\数码管-动态显示.uvproj
+Project File Date:  09/04/2017
+
+<h2>Output:</h2>
+Build target '数码管'
+compiling digitron.c...
+linking...
+Program Size: data=20.0 xdata=0 code=546
+creating hex file from "数码管-动态显示"...
+"数码管-动态显示" - 0 Error(s), 0 Warning(s).

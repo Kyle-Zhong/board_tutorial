@@ -1,0 +1,399 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/10/2017  15:28:21  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V4\C51\BIN\BL51.EXE main.obj, .\born.obj, .\digitron.obj TO 开机程序 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  main.obj (MAIN)
+  .\born.obj (BORN)
+  .\digitron.obj (DIGITRON)
+  C:\KEIL_V4\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V4\C51\LIB\C51S.LIB (?C?UIDIV)
+  C:\KEIL_V4\C51\LIB\C51S.LIB (?C?ILDOPTR)
+
+
+LINK MAP OF MODULE:  开机程序 (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000AH     UNIT         _DATA_GROUP_
+            DATA    0012H     0005H     UNIT         ?DT?_MUSIC?BORN
+            DATA    0017H     0003H     UNIT         ?DT?_DIGI_NUM?DIGITRON
+            IDATA   001AH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     00BBH     UNIT         ?PR?_DIGI_NUM?DIGITRON
+            CODE    00BEH     008FH     UNIT         ?PR?DIGI_START?DIGITRON
+            CODE    014DH     008DH     UNIT         ?C?LIB_CODE
+            CODE    01DAH     007CH     UNIT         ?PR?_DIGI_SHOW?DIGITRON
+            CODE    0256H     005AH     UNIT         ?CO?DIGITRON
+            CODE    02B0H     0043H     UNIT         ?PR?_PITCH?BORN
+            CODE    02F3H     0035H     UNIT         ?PR?_MUSIC?BORN
+            CODE    0328H     002AH     UNIT         ?PR?START_MUSIC?BORN
+            CODE    0352H     002AH     UNIT         ?PR?_DELAY_MS?DIGITRON
+            CODE    037CH     0028H     UNIT         ?PR?MAIN?MAIN
+            CODE    03A4H     001BH     UNIT         ?PR?BORN_INIT?BORN
+            CODE    03BFH     0012H     UNIT         ?CO?BORN
+            CODE    03D1H     000CH     UNIT         ?C_C51STARTUP
+            CODE    03DDH     000BH     UNIT         ?PR?_DELAY_4US?BORN
+            CODE    03E8H     0004H     UNIT         ?PR?DIGI_INIT?DIGITRON
+
+
+
+OVERLAY MAP OF MODULE:   开机程序 (MAIN)
+
+
+SEGMENT                           DATA_GROUP 
+  +--> CALLED SEGMENT           START    LENGTH
+-----------------------------------------------
+?C_C51STARTUP                   -----    -----
+  +--> ?PR?MAIN?MAIN
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/10/2017  15:28:21  PAGE 2
+
+
+?PR?MAIN?MAIN                   -----    -----
+  +--> ?PR?BORN_INIT?BORN
+  +--> ?PR?DIGI_INIT?DIGITRON
+  +--> ?PR?START_MUSIC?BORN
+  +--> ?PR?DIGI_START?DIGITRON
+  +--> ?PR?_DIGI_SHOW?DIGITRON
+
+?PR?START_MUSIC?BORN            -----    -----
+  +--> ?PR?_PITCH?BORN
+  +--> ?PR?_DELAY_MS?DIGITRON
+
+?PR?_PITCH?BORN                 0008H    0006H
+  +--> ?CO?BORN
+  +--> ?PR?_DELAY_4US?BORN
+
+?PR?_DELAY_MS?DIGITRON          -----    -----
+  +--> ?CO?DIGITRON
+
+?PR?DIGI_START?DIGITRON         0008H    0002H
+  +--> ?PR?_DIGI_SHOW?DIGITRON
+
+?PR?_DIGI_SHOW?DIGITRON         000AH    0008H
+  +--> ?CO?DIGITRON
+  +--> ?PR?_DELAY_MS?DIGITRON
+
+
+
+SYMBOL TABLE OF MODULE:  开机程序 (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00C0H         PUBLIC        P4
+  D:00A8H         PUBLIC        IE
+  B:0080H.7       PUBLIC        EN
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  C:037CH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:037CH         LINE#         13
+  C:037CH         LINE#         14
+  C:037CH         LINE#         15
+  C:037FH         LINE#         16
+  C:0382H         LINE#         18
+  C:0385H         LINE#         19
+  C:0387H         LINE#         20
+  C:038AH         LINE#         22
+  C:038AH         LINE#         23
+  C:038AH         LINE#         24
+  C:03A2H         LINE#         25
+  -------         ENDPROC       MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/10/2017  15:28:21  PAGE 3
+
+
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        BORN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  C:02F3H         PUBLIC        _Music
+  D:00C0H         PUBLIC        P4
+  C:03A4H         PUBLIC        Born_Init
+  D:00F9H         PUBLIC        CH
+  D:00A8H         PUBLIC        IE
+  D:00E9H         PUBLIC        CL
+  C:03BFH         PUBLIC        music_table
+  D:00FAH         PUBLIC        CCAP0H
+  B:0080H.7       PUBLIC        EN
+  D:00EAH         PUBLIC        CCAP0L
+  B:00D8H.6       PUBLIC        CR
+  D:00DAH         PUBLIC        CCAPM0
+  D:00B8H         PUBLIC        IP
+  D:00D9H         PUBLIC        CMOD
+  D:00D8H         PUBLIC        CCON
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:03DDH         PUBLIC        _Delay_4us
+  D:00A2H         PUBLIC        AUXR1
+  C:0328H         PUBLIC        Start_Music
+  C:02B0H         PUBLIC        _Pitch
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          BORN_INIT
+  C:03A4H         LINE#         30
+  C:03A4H         LINE#         31
+  C:03A4H         LINE#         32
+  C:03A7H         LINE#         37
+  C:03AAH         LINE#         39
+  C:03ACH         LINE#         40
+  C:03AEH         LINE#         42
+  C:03B1H         LINE#         47
+  C:03B7H         LINE#         49
+  C:03BAH         LINE#         52
+  C:03BCH         LINE#         53
+  C:03BEH         LINE#         54
+  -------         ENDPROC       BORN_INIT
+  -------         PROC          _PITCH
+  D:0008H         SYMBOL        pit
+  -------         DO            
+  D:000AH         SYMBOL        x
+  D:000CH         SYMBOL        y
+  -------         ENDDO         
+  C:02B0H         LINE#         58
+  C:02B4H         LINE#         59
+  C:02B4H         LINE#         62
+  C:02BAH         LINE#         64
+  C:02C7H         LINE#         65
+  C:02C7H         LINE#         66
+  C:02D7H         LINE#         67
+  C:02D7H         LINE#         68
+  C:02E1H         LINE#         69
+  C:02E8H         LINE#         70
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/10/2017  15:28:21  PAGE 4
+
+
+  C:02F2H         LINE#         71
+  C:02F2H         LINE#         72
+  -------         ENDPROC       _PITCH
+  -------         PROC          _MUSIC
+  D:0012H         SYMBOL        musictable
+  -------         DO            
+  D:0015H         SYMBOL        x
+  -------         ENDDO         
+  C:02F3H         LINE#         76
+  C:02F9H         LINE#         77
+  C:02F9H         LINE#         80
+  C:031AH         LINE#         81
+  C:031AH         LINE#         82
+  C:031DH         LINE#         83
+  C:0327H         LINE#         84
+  -------         ENDPROC       _MUSIC
+  -------         PROC          START_MUSIC
+  C:0328H         LINE#         86
+  C:0328H         LINE#         87
+  C:0328H         LINE#         88
+  C:032FH         LINE#         89
+  C:0336H         LINE#         90
+  C:033DH         LINE#         91
+  C:0344H         LINE#         92
+  C:034BH         LINE#         93
+  -------         ENDPROC       START_MUSIC
+  -------         PROC          _DELAY_4US
+  D:0006H         SYMBOL        z
+  C:03DDH         LINE#         97
+  C:03DDH         LINE#         98
+  C:03DDH         LINE#         99
+  C:03E7H         LINE#         100
+  -------         ENDPROC       _DELAY_4US
+  -------         ENDMOD        BORN
+
+  -------         MODULE        DIGITRON
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  C:01E5H         PUBLIC        _Digi_Show
+  D:00C0H         PUBLIC        P4
+  B:00C0H.0       PUBLIC        DIG1
+  B:00C0H.1       PUBLIC        DIG2
+  B:00C0H.4       PUBLIC        DIG3
+  B:00C0H.5       PUBLIC        DIG4
+  C:0256H         PUBLIC        table
+  D:00A8H         PUBLIC        IE
+  C:0003H         PUBLIC        _Digi_Num
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  D:00BBH         PUBLIC        P4SW
+  C:035EH         PUBLIC        _Delay_ms
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0268H         PUBLIC        table1
+  C:028CH         PUBLIC        table2
+  B:0080H.5       PUBLIC        EN1
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/10/2017  15:28:21  PAGE 5
+
+
+  B:0080H.4       PUBLIC        EN2
+  C:00BEH         PUBLIC        Digi_Start
+  C:03E8H         PUBLIC        Digi_Init
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          DIGI_INIT
+  C:03E8H         LINE#         52
+  C:03E8H         LINE#         53
+  C:03E8H         LINE#         54
+  C:03EBH         LINE#         55
+  -------         ENDPROC       DIGI_INIT
+  C:01DCH         SYMBOL        L?0034
+  C:01E1H         SYMBOL        L?0035
+  -------         PROC          L?0033
+  -------         ENDPROC       L?0033
+  C:01DCH         SYMBOL        L?0034
+  C:01E1H         SYMBOL        L?0035
+  -------         PROC          _DIGI_SHOW
+  D:0007H         SYMBOL        a
+  D:000BH         SYMBOL        num1
+  D:000CH         SYMBOL        b
+  D:000DH         SYMBOL        num2
+  D:000EH         SYMBOL        c
+  D:000FH         SYMBOL        num3
+  D:0010H         SYMBOL        d
+  D:0011H         SYMBOL        num4
+  C:01E5H         LINE#         60
+  C:01E9H         LINE#         61
+  C:01E9H         LINE#         62
+  C:01EFH         LINE#         63
+  C:01F1H         LINE#         64
+  C:01F3H         LINE#         65
+  C:01F5H         LINE#         67
+  C:01F7H         LINE#         68
+  C:01FCH         LINE#         69
+  C:01FCH         LINE#         71
+  C:01FFH         LINE#         73
+  C:0201H         LINE#         74
+  C:0209H         LINE#         75
+  C:020BH         LINE#         77
+  C:020EH         LINE#         79
+  C:0210H         LINE#         80
+  C:0217H         LINE#         81
+  C:0219H         LINE#         82
+  C:021BH         LINE#         84
+  C:021DH         LINE#         85
+  C:021FH         LINE#         86
+  C:021FH         LINE#         88
+  C:0222H         LINE#         90
+  C:0224H         LINE#         91
+  C:0226H         LINE#         92
+  C:022DH         LINE#         93
+  C:022FH         LINE#         95
+  C:0231H         LINE#         96
+  C:0233H         LINE#         97
+  C:0233H         LINE#         99
+  C:0236H         LINE#         101
+  C:0238H         LINE#         102
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/10/2017  15:28:21  PAGE 6
+
+
+  C:023AH         LINE#         103
+  C:023CH         LINE#         104
+  C:0243H         LINE#         106
+  C:0245H         LINE#         107
+  C:024DH         LINE#         108
+  C:024FH         LINE#         110
+  -------         ENDPROC       _DIGI_SHOW
+  -------         PROC          _DIGI_NUM
+  D:0002H         SYMBOL        num
+  -------         DO            
+  D:0017H         SYMBOL        a
+  D:0018H         SYMBOL        b
+  D:0019H         SYMBOL        c
+  D:0007H         SYMBOL        d
+  -------         ENDDO         
+  C:0003H         LINE#         116
+  C:0007H         LINE#         117
+  C:0007H         LINE#         120
+  C:001CH         LINE#         121
+  C:001CH         LINE#         122
+  C:0029H         LINE#         123
+  C:0043H         LINE#         124
+  C:006AH         LINE#         125
+  C:0091H         LINE#         127
+  C:00A3H         LINE#         128
+  C:00A5H         LINE#         130
+  C:00BDH         LINE#         131
+  -------         ENDPROC       _DIGI_NUM
+  -------         PROC          DIGI_START
+  -------         DO            
+  D:0008H         SYMBOL        time
+  -------         ENDDO         
+  C:00BEH         LINE#         133
+  C:00BEH         LINE#         134
+  C:00BEH         LINE#         136
+  C:00C4H         LINE#         137
+  C:00D1H         LINE#         138
+  C:00D1H         LINE#         139
+  C:00E3H         LINE#         140
+  C:00E5H         LINE#         141
+  C:00EBH         LINE#         142
+  C:00F8H         LINE#         143
+  C:00F8H         LINE#         144
+  C:0104H         LINE#         145
+  C:0106H         LINE#         146
+  C:010CH         LINE#         147
+  C:0119H         LINE#         148
+  C:0119H         LINE#         149
+  C:0126H         LINE#         150
+  C:0128H         LINE#         151
+  C:012EH         LINE#         152
+  C:013BH         LINE#         153
+  C:013BH         LINE#         154
+  C:014AH         LINE#         155
+  C:014CH         LINE#         156
+  -------         ENDPROC       DIGI_START
+  C:0355H         SYMBOL        L?0031
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/10/2017  15:28:21  PAGE 7
+
+
+  C:035AH         SYMBOL        L?0032
+  -------         PROC          L?0030
+  -------         ENDPROC       L?0030
+  C:0355H         SYMBOL        L?0031
+  C:035AH         SYMBOL        L?0032
+  -------         PROC          _DELAY_MS
+  D:0006H         SYMBOL        z
+  -------         DO            
+  D:0006H         SYMBOL        x
+  D:0004H         SYMBOL        y
+  -------         ENDDO         
+  C:035EH         LINE#         159
+  C:035EH         LINE#         160
+  C:035EH         LINE#         163
+  C:0367H         LINE#         164
+  C:037BH         LINE#         165
+  -------         ENDPROC       _DELAY_MS
+  -------         ENDMOD        DIGITRON
+
+  -------         MODULE        ?C?UIDIV
+  C:014DH         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+  -------         MODULE        ?C?ILDOPTR
+  C:01A2H         PUBLIC        ?C?ILDOPTR
+  -------         ENDMOD        ?C?ILDOPTR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_MUSIC?BORN
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DIGI_NUM?DIGITRON
+
+Program Size: data=27.0 xdata=0 code=1004
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)

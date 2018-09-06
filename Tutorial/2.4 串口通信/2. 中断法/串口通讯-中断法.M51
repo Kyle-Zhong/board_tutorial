@@ -1,0 +1,119 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/09/2018  21:44:51  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V4\C51\BIN\BL51.EXE main.obj TO 串口通讯-中断法 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  main.obj (MAIN)
+  C:\KEIL_V4\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  串口通讯-中断法 (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0019H     UNIT         ?PR?USART_HANDLER?MAIN
+            CODE    001CH     0005H     UNIT         ?PR?MAIN?MAIN
+                    0021H     0002H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     0016H     UNIT         ?PR?USART_INIT?MAIN
+            CODE    003CH     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   串口通讯-中断法 (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN
+  +--> ?PR?USART_INIT?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  串口通讯-中断法 (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  B:00A8H.7       PUBLIC        EA
+  C:0026H         PUBLIC        Usart_Init
+  D:00A8H         PUBLIC        IE
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/09/2018  21:44:51  PAGE 2
+
+
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  D:00D8H         PUBLIC        CCON
+  C:001CH         PUBLIC        main
+  D:0099H         PUBLIC        SBUF
+  C:0003H         PUBLIC        USART_Handler
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:008DH         PUBLIC        TH1
+  B:0098H.7       PUBLIC        SM0
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  B:0098H.4       PUBLIC        REN
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:001CH         LINE#         16
+  C:001CH         LINE#         17
+  C:001CH         LINE#         18
+  C:001FH         LINE#         20
+  -------         ENDPROC       MAIN
+  -------         PROC          USART_INIT
+  C:0026H         LINE#         24
+  C:0026H         LINE#         25
+  C:0026H         LINE#         26
+  C:0029H         LINE#         27
+  C:002CH         LINE#         28
+  C:002FH         LINE#         30
+  C:0031H         LINE#         31
+  C:0033H         LINE#         32
+  C:0035H         LINE#         34
+  C:0037H         LINE#         35
+  C:0039H         LINE#         36
+  C:003BH         LINE#         37
+  -------         ENDPROC       USART_INIT
+  -------         PROC          USART_HANDLER
+  -------         DO            
+  D:0007H         SYMBOL        a
+  -------         ENDDO         
+  C:0003H         LINE#         40
+  C:000AH         LINE#         44
+  C:000CH         LINE#         46
+  C:000EH         LINE#         47
+  C:0010H         LINE#         48
+  C:0012H         LINE#         50
+  C:0015H         LINE#         51
+  C:0017H         LINE#         52
+  -------         ENDPROC       USART_HANDLER
+  -------         ENDMOD        MAIN
+
+Program Size: data=9.0 xdata=0 code=70
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

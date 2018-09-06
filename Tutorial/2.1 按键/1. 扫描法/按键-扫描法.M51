@@ -1,0 +1,109 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/20/2017  21:43:44  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V4\C51\BIN\BL51.EXE main.obj TO 按键-扫描法 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  main.obj (MAIN)
+  C:\KEIL_V4\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  按键-扫描法 (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     003FH     UNIT         ?PR?MAIN?MAIN
+            CODE    0042H     001EH     UNIT         ?PR?_DELAY_MS?MAIN
+            CODE    0060H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   按键-扫描法 (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN
+  +--> ?PR?_DELAY_MS?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  按键-扫描法 (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  C:0003H         PUBLIC        main
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/20/2017  21:43:44  PAGE 2
+
+
+  C:0042H         PUBLIC        _Delay_ms
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:00B0H.1       PUBLIC        key0
+  D:00D0H         PUBLIC        PSW
+  B:00C0H.3       PUBLIC        key2
+  -------         PROC          MAIN
+  C:0003H         LINE#         21
+  C:0003H         LINE#         22
+  C:0003H         LINE#         23
+  C:0006H         LINE#         25
+  C:0006H         LINE#         26
+  C:0006H         LINE#         27
+  C:0009H         LINE#         28
+  C:0009H         LINE#         29
+  C:0010H         LINE#         30
+  C:0013H         LINE#         31
+  C:0013H         LINE#         32
+  C:0020H         LINE#         34
+  C:0023H         LINE#         35
+  C:0023H         LINE#         36
+  C:0023H         LINE#         38
+  C:0026H         LINE#         39
+  C:0026H         LINE#         40
+  C:002DH         LINE#         41
+  C:0030H         LINE#         42
+  C:0030H         LINE#         43
+  C:003DH         LINE#         45
+  -------         ENDPROC       MAIN
+  -------         PROC          _DELAY_MS
+  D:0006H         SYMBOL        z
+  -------         DO            
+  D:0006H         SYMBOL        x
+  D:0004H         SYMBOL        y
+  -------         ENDDO         
+  C:0042H         LINE#         51
+  C:0042H         LINE#         52
+  C:0042H         LINE#         55
+  C:004BH         LINE#         56
+  C:005FH         LINE#         57
+  -------         ENDPROC       _DELAY_MS
+  -------         ENDMOD        MAIN
+
+Program Size: data=9.0 xdata=0 code=108
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

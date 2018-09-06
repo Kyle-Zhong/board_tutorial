@@ -1,0 +1,129 @@
+C51 COMPILER V9.52.0.0   IIC                                                               09/01/2017 19:45:15 PAGE 1   
+
+
+C51 COMPILER V9.52.0.0, COMPILATION OF MODULE IIC
+OBJECT MODULE PLACED IN .\iic.obj
+COMPILER INVOKED BY: G:\Software rescouces\Keil\c51v952\C51\BIN\C51.EXE ..\HARDWARE\IIC\iic.c LARGE BROWSE INCDIR(..\HAR
+                    -DWARE\AUDIO;..\HARDWARE\DIGITRON;..\HARDWARE\IIC;..\HARDWARE\OLED) DEBUG OBJECTEXTEND PRINT(.\iic.lst) TABS(2) OBJECT(.\
+                    -iic.obj)
+
+line level    source
+
+   1          /*------------------------*/
+   2          //傀儡师实验板配套例程
+   3          //实验名称：OLED
+   4          //作者：zhong
+   5          //工程建立时间：2017年7月28日
+   6          //最后修改时间：2017年8月4日
+   7          //配套教程版本：V1.0
+   8          /*------------------------*/
+   9          
+  10          #include "stc12.h"
+  11          #include "iic.h"
+  12          
+  13          void Delay_4us(uchar z)
+  14          {
+  15   1        while(z--);
+  16   1      }
+  17          
+  18          void IIC_Start(void)
+  19          {
+  20   1        sda = 1;
+  21   1        scl = 1;
+  22   1        sda = 0;
+  23   1        scl = 0;
+  24   1      }
+  25          
+  26          void IIC_Stop(void)
+  27          {
+  28   1        sda = 0;
+  29   1        scl = 0;
+  30   1        scl = 1;
+  31   1        sda = 1;
+  32   1      }
+  33          
+  34          void IIC_Send_Byte(uchar Data)
+  35          {
+  36   1        uint i;
+  37   1      
+  38   1        for(i = 0;i < 8;i++)
+  39   1        {
+  40   2          if(Data & 0X80)
+  41   2            sda = 1;
+  42   2          else
+  43   2            sda = 0;
+  44   2      
+  45   2          scl = 1;
+  46   2          scl = 0;
+  47   2      
+  48   2          Data <<= 1;
+  49   2        }
+  50   1      
+  51   1        scl = 1;
+  52   1        sda = 1;
+  53   1        scl = 0;
+C51 COMPILER V9.52.0.0   IIC                                                               09/01/2017 19:45:15 PAGE 2   
+
+  54   1      }
+  55          
+  56          uchar IIC_Read_Byte(void)
+  57          {
+  58   1        uint i;
+  59   1        uchar Data;
+  60   1        
+  61   1        scl = 0;
+  62   1        Delay_4us(1);
+  63   1        sda = 1;
+  64   1        Delay_4us(1);
+  65   1      
+  66   1        for(i = 0;i < 8;i++)
+  67   1        {
+  68   2          scl = 1;
+  69   2          Delay_4us(1);
+  70   2          Data = (Data << 1) | sda;
+  71   2          scl = 0;
+  72   2          Delay_4us(1);
+  73   2        }
+  74   1      
+  75   1        return Data;
+  76   1      }
+  77          
+  78          void Write_add(uchar Slave_Address,uchar REG_Address,uchar REG_Data)
+  79          {
+  80   1        IIC_Start();
+  81   1        IIC_Send_Byte(Slave_Address);
+  82   1        IIC_Send_Byte(REG_Address);
+  83   1        IIC_Send_Byte(REG_Data);
+  84   1        IIC_Stop();
+  85   1      }
+  86          
+  87          uchar Read_add(uchar Slave_Address,uchar REG_Address)
+  88          {
+  89   1        uchar REG_Data;
+  90   1      
+  91   1        IIC_Start();
+  92   1        IIC_Send_Byte(Slave_Address + 0);
+  93   1        IIC_Send_Byte(REG_Address);
+  94   1      
+  95   1      
+  96   1        IIC_Start();
+  97   1        IIC_Send_Byte(Slave_Address + 1);
+  98   1        REG_Data = IIC_Read_Byte();
+  99   1        IIC_Stop();
+ 100   1        
+ 101   1        return REG_Data;
+ 102   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    171    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

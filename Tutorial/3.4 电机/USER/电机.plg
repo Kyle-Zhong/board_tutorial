@@ -1,0 +1,21 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Administrator\Desktop\实验板项目\光盘资料\2. 例程\3.4 电机\USER\电机.uvproj
+Project File Date:  09/02/2017
+
+<h2>Output:</h2>
+Build target '电机'
+compiling main.c...
+compiling motor.c...
+..\HARDWARE\MOTOR\MOTOR.C(106): warning C206: 'abs': missing function-prototype
+..\HARDWARE\MOTOR\MOTOR.C(106): error C267: 'abs': requires ANSI-style prototype
+Target not created
+Build target '电机'
+compiling motor.c...
+linking...
+Program Size: data=9.0 xdata=0 code=233
+creating hex file from "电机"...
+"电机" - 0 Error(s), 0 Warning(s).

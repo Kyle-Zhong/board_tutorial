@@ -1,0 +1,35 @@
+C51 COMPILER V9.00   MAIN                                                                  11/03/2017 17:03:10 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil_v4\C51\BIN\C51.EXE main.c BROWSE INCDIR(..\HARDWARE\DIGITRON) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include "stc12.h"
+   2          #include "digitron.h"
+   3          
+   4          void main()
+   5          {
+   6   1              Digi_Init();
+   7   1              
+   8   1              while(1)
+   9   1              {
+  10   2                      Digi_Num(1234);         
+  11   2              }
+  12   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     12    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

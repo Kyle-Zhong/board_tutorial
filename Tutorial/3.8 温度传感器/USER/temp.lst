@@ -1,0 +1,139 @@
+C51 COMPILER V9.00   TEMP                                                                  11/11/2017 11:15:31 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE TEMP
+OBJECT MODULE PLACED IN .\temp.obj
+COMPILER INVOKED BY: C:\Keil_v4\C51\BIN\C51.EXE ..\HARDWARE\TEMP\temp.c LARGE BROWSE INCDIR(..\HARDWARE\TEMP;..\HARDWARE
+                    -\DIGITRON) DEBUG OBJECTEXTEND PRINT(.\temp.lst) OBJECT(.\temp.obj)
+
+line level    source
+
+   1          #include "stc12.h"
+   2          #include "temp.h"
+   3          #include "digitron.h"
+   4          #include "intrins.h"
+   5          
+   6          //微秒延时函数
+   7          //具体延时实验需要debug来测量
+   8          void Delay_us(uint n)
+   9          {
+  10   1          while (n--)
+  11   1          {
+  12   2              _nop_();
+  13   2              _nop_();
+  14   2          }
+  15   1      }
+  16          
+  17          //温度传感器复位函数
+  18          void Temp_Init(void)
+  19          {
+  20   1              uint x = 1;
+  21   1              
+  22   1              while(x)
+  23   1              {
+  24   2                      DA = 0;//拉低数据线
+  25   2                      Delay_us(480);//等待480us
+  26   2                      DA = 1;//释放数据线
+  27   2                      Delay_us(60);//等待60us
+  28   2                      x = DA;//检查DS18B20是否有响应
+  29   2                      Delay_us(420);//等待DS8B20释放数据线
+  30   2              }       
+  31   1      }
+  32          
+  33          //给DB18B20写一节数据
+  34          void Temp_Write(uchar dat)
+  35          {
+  36   1              uchar i;
+  37   1      
+  38   1              for(i = 0;i < 8;i++)
+  39   1              {
+  40   2                      //写数据时序
+  41   2                      DA = 0;
+  42   2                      Delay_us(1);
+  43   2                      DA = 1;
+  44   2      
+  45   2                      //发送数据
+  46   2                      dat >>= 1;
+  47   2                      DA = CY;
+  48   2      
+  49   2                      Delay_us(20);
+  50   2      
+  51   2                      DA = 1;
+  52   2                      Delay_us(1);
+  53   2              }
+  54   1      }
+C51 COMPILER V9.00   TEMP                                                                  11/11/2017 11:15:31 PAGE 2   
+
+  55          
+  56          //从DB18B20读一节数据
+  57          uchar Temp_Read(void)
+  58          {
+  59   1          uchar i;
+  60   1          uchar dat = 0;
+  61   1      
+  62   1          for (i = 0;i < 8;i++)//读取一节8位数据
+  63   1          {
+  64   2              dat >>= 1;
+  65   2      
+  66   2                      //读数据时序
+  67   2              DA = 0;                   
+  68   2              Delay_us(1);               
+  69   2              DA = 1;                   
+  70   2              Delay_us(1);
+  71   2                      
+  72   2                      //读取数据                
+  73   2              if(DA) 
+  74   2                              dat |= 0x80; 
+  75   2                      
+  76   2                      //等待读取结束        
+  77   2              Delay_us(60);              
+  78   2          }
+  79   1      
+  80   1          return dat;
+  81   1      }
+  82          
+  83          //温度显示函数
+  84          void Temp_Show(void)
+  85          {
+  86   1              uint temp;
+  87   1              uchar th,tl;
+  88   1      
+  89   1              //开始AD转换指令
+  90   1              Temp_Init();
+  91   1              Temp_Write(0XCC);
+  92   1              Temp_Write(0X44);
+  93   1      
+  94   1              while(!DA);//等待转换完成
+  95   1      
+  96   1              //读取暂存存储器数据指令
+  97   1              Temp_Init();
+  98   1              Temp_Write(0XCC);
+  99   1              Temp_Write(0XBE);
+ 100   1      
+ 101   1              tl = Temp_Read();//读取温度低字节
+ 102   1              th = Temp_Read();//读取温度高字节
+ 103   1      
+ 104   1              //合成高低温度数据，取低字节高4位和高字节低三位，得到温度的整数值
+ 105   1              tl = (tl & 0XF0) >> 4;
+ 106   1              temp = th;
+ 107   1              temp <<= 4;
+ 108   1              temp |= tl;
+ 109   1      
+ 110   1              Digi_Num(temp);
+ 111   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    199    ----
+   CONSTANT SIZE    =   ----    ----
+C51 COMPILER V9.00   TEMP                                                                  11/11/2017 11:15:31 PAGE 3   
+
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

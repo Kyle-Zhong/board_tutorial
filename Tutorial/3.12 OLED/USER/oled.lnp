@@ -1,0 +1,6 @@
+"main.obj",
+".\iic.obj",
+".\oled.obj",
+".\table.obj" 
+TO "oled" 
+RAMSIZE(256) 

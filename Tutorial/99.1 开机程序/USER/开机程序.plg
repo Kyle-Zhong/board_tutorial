@@ -1,0 +1,35 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Administrator\Desktop\实验板项目\光盘资料\2. 例程\99.1 开机程序\USER\开机程序.uvproj
+Project File Date:  11/09/2017
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling main.c...
+main.c(10): warning C315: unknown #directive 'incldue'
+MAIN.C(33): warning C206: '_cror_': missing function-prototype
+MAIN.C(33): error C267: '_cror_': requires ANSI-style prototype
+Target not created
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_MUSIC?BORN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DIGI_NUM?DIGITRON
+Program Size: data=33.0 xdata=0 code=1075
+creating hex file from "开机程序"...
+"开机程序" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_MUSIC?BORN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DIGI_NUM?DIGITRON
+Program Size: data=27.0 xdata=0 code=1004
+creating hex file from "开机程序"...
+"开机程序" - 0 Error(s), 2 Warning(s).

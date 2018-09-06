@@ -1,0 +1,296 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/08/2017  11:50:53  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V4\C51\BIN\BL51.EXE main.obj, .\audio.obj, .\digitron.obj TO 咪头 RAMSIZE (256)
+
+
+MEMORY MODEL: LARGE
+
+
+INPUT MODULES INCLUDED:
+  main.obj (MAIN)
+  .\audio.obj (AUDIO)
+  .\digitron.obj (DIGITRON)
+  C:\KEIL_V4\C51\LIB\C51L.LIB (?C_STARTUP)
+  C:\KEIL_V4\C51\LIB\C51L.LIB (?C?UIDIV)
+
+
+LINK MAP OF MODULE:  咪头 (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
+            XDATA   0000H     000BH     UNIT         _XDATA_GROUP_
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     00D4H     UNIT         ?PR?_DIGI_NUM?DIGITRON
+            CODE    00D7H     0073H     UNIT         ?PR?_DIGI_SHOW?DIGITRON
+            CODE    014AH     005CH     UNIT         ?CO?DIGITRON
+            CODE    01A6H     0055H     UNIT         ?C?LIB_CODE
+            CODE    01FBH     0030H     UNIT         ?PR?_DELAY_MS?DIGITRON
+            CODE    022BH     0013H     UNIT         ?PR?AUDIO_READ?AUDIO
+            CODE    023EH     000CH     UNIT         ?C_C51STARTUP
+            CODE    024AH     000BH     UNIT         ?PR?MAIN?MAIN
+            CODE    0255H     000AH     UNIT         ?PR?AUDIO_INIT?AUDIO
+            CODE    025FH     0008H     UNIT         ?PR?AUDIO_SHOW?AUDIO
+            CODE    0267H     0004H     UNIT         ?PR?DIGI_INIT?DIGITRON
+
+
+
+OVERLAY MAP OF MODULE:   咪头 (MAIN)
+
+
+SEGMENT                           XDATA_GROUP
+  +--> CALLED SEGMENT           START    LENGTH
+-----------------------------------------------
+?C_C51STARTUP                   -----    -----
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN                   -----    -----
+  +--> ?PR?AUDIO_INIT?AUDIO
+  +--> ?PR?DIGI_INIT?DIGITRON
+  +--> ?PR?AUDIO_SHOW?AUDIO
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/08/2017  11:50:53  PAGE 2
+
+
+?PR?AUDIO_SHOW?AUDIO            -----    -----
+  +--> ?PR?AUDIO_READ?AUDIO
+  +--> ?PR?_DIGI_NUM?DIGITRON
+
+?PR?_DIGI_NUM?DIGITRON          0000H    0003H
+  +--> ?PR?_DIGI_SHOW?DIGITRON
+
+?PR?_DIGI_SHOW?DIGITRON         0003H    0008H
+  +--> ?CO?DIGITRON
+  +--> ?PR?_DELAY_MS?DIGITRON
+
+?PR?_DELAY_MS?DIGITRON          -----    -----
+  +--> ?CO?DIGITRON
+
+
+
+SYMBOL TABLE OF MODULE:  咪头 (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00C0H         PUBLIC        P4
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  C:024AH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:024AH         LINE#         14
+  C:024AH         LINE#         15
+  C:024AH         LINE#         16
+  C:024DH         LINE#         17
+  C:0250H         LINE#         19
+  C:0250H         LINE#         20
+  C:0250H         LINE#         21
+  C:0253H         LINE#         22
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        AUDIO
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00C0H         PUBLIC        P4
+  D:00A8H         PUBLIC        IE
+  D:00BDH         PUBLIC        ADC_RES
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  D:00BCH         PUBLIC        ADC_CONTR
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:022BH         PUBLIC        Audio_Read
+  D:009DH         PUBLIC        P1ASF
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/08/2017  11:50:53  PAGE 3
+
+
+  C:0255H         PUBLIC        Audio_Init
+  C:025FH         PUBLIC        Audio_Show
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          AUDIO_INIT
+  C:0255H         LINE#         6
+  C:0255H         LINE#         7
+  C:0255H         LINE#         8
+  C:0258H         LINE#         9
+  C:025BH         LINE#         13
+  C:025EH         LINE#         14
+  -------         ENDPROC       AUDIO_INIT
+  -------         PROC          AUDIO_READ
+  -------         DO            
+  D:0007H         SYMBOL        valu
+  D:0006H         SYMBOL        ADC_FLAG
+  -------         ENDDO         
+  C:022BH         LINE#         17
+  C:022BH         LINE#         18
+  C:022BH         LINE#         21
+  C:022EH         LINE#         23
+  C:0235H         LINE#         25
+  C:0238H         LINE#         26
+  C:0238H         LINE#         27
+  C:023BH         LINE#         29
+  C:023DH         LINE#         30
+  C:023DH         LINE#         32
+  C:023DH         LINE#         33
+  -------         ENDPROC       AUDIO_READ
+  -------         PROC          AUDIO_SHOW
+  -------         DO            
+  D:0007H         SYMBOL        value
+  -------         ENDDO         
+  C:025FH         LINE#         36
+  C:025FH         LINE#         37
+  C:025FH         LINE#         40
+  C:0262H         LINE#         42
+  -------         ENDPROC       AUDIO_SHOW
+  -------         ENDMOD        AUDIO
+
+  -------         MODULE        DIGITRON
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  C:00D7H         PUBLIC        _Digi_Show
+  D:00C0H         PUBLIC        P4
+  B:00C0H.0       PUBLIC        DIG1
+  B:00C0H.1       PUBLIC        DIG2
+  B:00C0H.4       PUBLIC        DIG3
+  B:00C0H.5       PUBLIC        DIG4
+  C:014AH         PUBLIC        table
+  D:00A8H         PUBLIC        IE
+  C:0003H         PUBLIC        _Digi_Num
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  C:01A2H         PUBLIC        point
+  D:00BBH         PUBLIC        P4SW
+  C:020DH         PUBLIC        _Delay_ms
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/08/2017  11:50:53  PAGE 4
+
+
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:015AH         PUBLIC        table1
+  C:017EH         PUBLIC        table2
+  B:0080H.5       PUBLIC        EN1
+  B:0080H.4       PUBLIC        EN2
+  C:0267H         PUBLIC        Digi_Init
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          DIGI_INIT
+  C:0267H         LINE#         54
+  C:0267H         LINE#         55
+  C:0267H         LINE#         56
+  C:026AH         LINE#         57
+  -------         ENDPROC       DIGI_INIT
+  -------         PROC          _DIGI_SHOW
+  D:0007H         SYMBOL        a
+  X:0004H         SYMBOL        num1
+  X:0005H         SYMBOL        b
+  X:0006H         SYMBOL        num2
+  X:0007H         SYMBOL        c
+  X:0008H         SYMBOL        num3
+  X:0009H         SYMBOL        d
+  X:000AH         SYMBOL        num4
+  C:00D7H         LINE#         62
+  C:00DFH         LINE#         63
+  C:00DFH         LINE#         64
+  C:00E5H         LINE#         65
+  C:00E7H         LINE#         66
+  C:00E9H         LINE#         67
+  C:00EBH         LINE#         69
+  C:00EDH         LINE#         70
+  C:00F7H         LINE#         71
+  C:00F9H         LINE#         73
+  C:00FCH         LINE#         75
+  C:00FEH         LINE#         76
+  C:0105H         LINE#         77
+  C:0105H         LINE#         79
+  C:0108H         LINE#         81
+  C:010AH         LINE#         82
+  C:0113H         LINE#         83
+  C:0115H         LINE#         84
+  C:0115H         LINE#         86
+  C:0115H         LINE#         87
+  C:0115H         LINE#         88
+  C:0115H         LINE#         90
+  C:0118H         LINE#         92
+  C:011AH         LINE#         93
+  C:011CH         LINE#         94
+  C:0125H         LINE#         95
+  C:0125H         LINE#         97
+  C:0125H         LINE#         98
+  C:0125H         LINE#         99
+  C:0125H         LINE#         101
+  C:0128H         LINE#         103
+  C:012AH         LINE#         104
+  C:012CH         LINE#         105
+  C:012EH         LINE#         106
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/08/2017  11:50:53  PAGE 5
+
+
+  C:0137H         LINE#         108
+  C:0139H         LINE#         109
+  C:0141H         LINE#         110
+  C:0143H         LINE#         112
+  -------         ENDPROC       _DIGI_SHOW
+  -------         PROC          _DIGI_NUM
+  D:0002H         SYMBOL        num
+  -------         DO            
+  X:0000H         SYMBOL        a
+  X:0001H         SYMBOL        b
+  X:0002H         SYMBOL        c
+  D:0007H         SYMBOL        d
+  -------         ENDDO         
+  C:0003H         LINE#         118
+  C:0007H         LINE#         119
+  C:0007H         LINE#         122
+  C:001CH         LINE#         123
+  C:001CH         LINE#         124
+  C:002CH         LINE#         125
+  C:0047H         LINE#         126
+  C:006FH         LINE#         127
+  C:0096H         LINE#         129
+  C:00B6H         LINE#         130
+  C:00B8H         LINE#         132
+  C:00D6H         LINE#         133
+  -------         ENDPROC       _DIGI_NUM
+  C:0204H         SYMBOL        L?0018
+  C:0209H         SYMBOL        L?0019
+  -------         PROC          L?0017
+  -------         ENDPROC       L?0017
+  C:0204H         SYMBOL        L?0018
+  C:0209H         SYMBOL        L?0019
+  -------         PROC          _DELAY_MS
+  D:0006H         SYMBOL        z
+  -------         DO            
+  D:0006H         SYMBOL        x
+  D:0004H         SYMBOL        y
+  -------         ENDDO         
+  C:020DH         LINE#         136
+  C:020DH         LINE#         137
+  C:020DH         LINE#         140
+  C:0216H         LINE#         141
+  C:022AH         LINE#         142
+  -------         ENDPROC       _DELAY_MS
+  -------         ENDMOD        DIGITRON
+
+  -------         MODULE        ?C?UIDIV
+  C:01A6H         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+Program Size: data=9.0 xdata=11 code=619
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

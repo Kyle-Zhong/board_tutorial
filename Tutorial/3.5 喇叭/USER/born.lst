@@ -1,0 +1,115 @@
+C51 COMPILER V9.00   BORN                                                                  11/20/2017 20:38:17 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE BORN
+OBJECT MODULE PLACED IN .\born.obj
+COMPILER INVOKED BY: C:\Keil_v4\C51\BIN\C51.EXE ..\HARDWARE\BORN\born.c BROWSE INCDIR(..\HARDWARE\BORN) DEBUG OBJECTEXTE
+                    -ND PRINT(.\born.lst) OBJECT(.\born.obj)
+
+line level    source
+
+   1          #include "stc12.h"
+   2          #include "born.h"
+   3          
+   4          /*---------------------
+   5          53-低音1    26-中音1     
+   6          50-低音1#   25-中音1#    
+   7          47-低音2        24-中音2         
+   8          44-低音2#   23-中音2#    
+   9          42-低音3        21-中音3        
+  10          40-低音4        20-中音4        
+  11          38-低音4#   19-中音4#    
+  12          36-低音5        17-中音5        
+  13          34-低音5#   16-中音5#    
+  14          32-低音6        15-中音6         
+  15          30-低音6#   14-中音6#
+  16          28-低音7        13-中音7         
+  17          ----------------------*/
+  18          
+  19          //模拟正弦波所需的数组
+  20          uchar code table[] = 
+  21          {
+  22          0X80,0X54,0X2D,0X03,0X02,
+  23          0X02,0X03,0X2D,0X54,0X80,
+  24          0XAA,0XD1,0XEF,0XFC,0XFC,
+  25          0XEF,0XD1,0XAA
+  26          };
+  27          
+  28          //喇叭初始化函数
+  29          void Born_Init(void)
+  30          {
+  31   1              CCON = 0X00;//初始化CCON
+  32   1                                //关闭PCA计数器
+  33   1                                //清除PCA阵列溢出标志位CF
+  34   1                                //清除模块0、模块1中断标志位CCF0、CCF1
+  35   1      
+  36   1              AUXR1 = 0X7F;//翻转，在P4.2输出
+  37   1      
+  38   1              CL = 0;//清零计数器
+  39   1              CH = 0;
+  40   1      
+  41   1              CMOD = 0X08;//设置PCA工作模式
+  42   1                              //空闲模式下PCA计数器继续工作
+  43   1                                      // PCA计数器计数频率为12MHz
+  44   1                                      //关闭PCA计数器溢出中断
+  45   1      
+  46   1              CCAP0H = CCAP0L = 0X80;//PWM0输出频率为46K,占空比为50%的PWM信号
+  47   1      
+  48   1              CCAPM0 = 0X42;//模块0为PWM输出0模式                                  
+  49   1                                        //没有PCA中断
+  50   1      
+  51   1              CR = 1;//启动PCA计数器
+  52   1              EN = 0;
+  53   1      }
+  54          
+C51 COMPILER V9.00   BORN                                                                  11/20/2017 20:38:17 PAGE 2   
+
+  55          //音调函数
+  56          //pit控制音调，取值范围为上方注释中的值
+  57          void Pitch(uint pit)
+  58          {
+  59   1              uint x,y;
+  60   1      
+  61   1              y = BEAT;
+  62   1      
+  63   1              while(y--)
+  64   1              {
+  65   2                      for(x = 0;x < 18;x++)
+  66   2                      {
+  67   3                              CCAP0H = CCAP0L = table[x];
+  68   3                              Delay_4us(pit);
+  69   3                      }
+  70   2              }
+  71   1      }
+  72          
+  73          //演奏音乐函数
+  74          //型参为音乐数组名字
+  75          void Music(uint *musictable)
+  76          {
+  77   1              uint x;
+  78   1      
+  79   1              for(x = 0;musictable[x] != 255;x++)
+  80   1              {
+  81   2                      Pitch(musictable[x]);
+  82   2              }
+  83   1      }
+  84          
+  85          //4us延时函数
+  86          void Delay_4us(uint z)
+  87          {
+  88   1              while(z--);
+  89   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    158    ----
+   CONSTANT SIZE    =     18    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      11
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

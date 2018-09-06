@@ -1,0 +1,167 @@
+C51 COMPILER V9.00   OLED                                                                  09/02/2017 17:26:31 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE OLED
+OBJECT MODULE PLACED IN .\oled.obj
+COMPILER INVOKED BY: C:\Keil_v4\C51\BIN\C51.EXE ..\HARDWARE\OLED\oled.c LARGE BROWSE INCDIR(..\HARDWARE\REMOTE;..\HARDWA
+                    -RE\DIGITRON;..\HARDWARE\IIC;..\HARDWARE\OLED) DEBUG OBJECTEXTEND PRINT(.\oled.lst) OBJECT(.\oled.obj)
+
+line level    source
+
+   1          #include "stc12.h"
+   2          #include "oled.h"
+   3          #include "iic.h"
+   4          #include "table.h"
+   5          
+   6          //毫秒延时函数，误差2us
+   7          void Delay_ms(uint z)
+   8          {
+   9   1              uint x,y;
+  10   1      
+  11   1              for(x = z;x > 0;x--)
+  12   1                      for(y = 921;y > 0;y--);
+  13   1      }
+  14          
+  15          //写指令函数
+  16          void Write_Cmd(uchar command)
+  17          {
+  18   1              Write_add(OLED_Add,OLED_Com,command);
+  19   1      }
+  20          
+  21          //写数据函数
+  22          void Write_Dat(uchar dat)
+  23          {
+  24   1              Write_add(OLED_Add,OLED_Dat,dat);
+  25   1      }
+  26          
+  27          //填满OLED函数
+  28          void OLED_Fill(uchar Fill_Data)
+  29          {
+  30   1              uchar m,n;
+  31   1      
+  32   1              for(m = 0;m < 8;m++)
+  33   1              {
+  34   2                      Write_Cmd(0XB0 + m);
+  35   2                      Write_Cmd(0X01);
+  36   2                      Write_Cmd(0X10);
+  37   2      
+  38   2                      for(n = 0;n < 128;n++);
+  39   2                              Write_Dat(Fill_Data);
+  40   2              }
+  41   1      }
+  42          
+  43          //OLED清屏函数
+  44          void OLED_Cls(void)
+  45          {
+  46   1              OLED_Fill(0X00);
+  47   1      }
+  48          
+  49          //OLED坐标定位函数
+  50          void OLED_Set_Pos(uchar x, uchar y) 
+  51          { 
+  52   1              Write_Cmd(0XB0 + y);
+  53   1              Write_Cmd(((x & 0XF0) >> 4) | 0X10);
+  54   1              Write_Cmd((x & 0X0F) | 0X01);
+C51 COMPILER V9.00   OLED                                                                  09/02/2017 17:26:31 PAGE 2   
+
+  55   1      }
+  56          
+  57          //OLED初始化函数
+  58          void OLED_Init(void)
+  59          {
+  60   1              Delay_ms(200);
+  61   1              
+  62   1              Write_Cmd(0XAE);
+  63   1              Write_Cmd(0X00);
+  64   1              Write_Cmd(0X10);
+  65   1              Write_Cmd(0X40);
+  66   1              Write_Cmd(0X81);
+  67   1              Write_Cmd(0XCF);
+  68   1              Write_Cmd(0XA1);
+  69   1              Write_Cmd(0XC8);
+  70   1              Write_Cmd(0XA6);
+  71   1              Write_Cmd(0XA8);
+  72   1              Write_Cmd(0X3F);
+  73   1              Write_Cmd(0XD3);
+  74   1              Write_Cmd(0X00);
+  75   1              Write_Cmd(0XD5);
+  76   1              Write_Cmd(0X80);
+  77   1              Write_Cmd(0XD9);
+  78   1              Write_Cmd(0XF1);
+  79   1              Write_Cmd(0XDA);
+  80   1              Write_Cmd(0X12);
+  81   1              Write_Cmd(0XDB);
+  82   1              Write_Cmd(0X40);
+  83   1              Write_Cmd(0X20);
+  84   1              Write_Cmd(0X02);
+  85   1              Write_Cmd(0X8D);
+  86   1              Write_Cmd(0X14);
+  87   1              Write_Cmd(0XA4);
+  88   1              Write_Cmd(0XA6);
+  89   1              Write_Cmd(0XAF);
+  90   1              
+  91   1              OLED_Cls();
+  92   1              OLED_Set_Pos(0,0);
+  93   1      }
+  94          
+  95          //OLED显示数字函数
+  96          void OLED_Showmun(uchar x,uchar y,uint num)
+  97          {
+  98   1              uint i = 0;
+  99   1      
+ 100   1              //显示超出屏幕最右端，自动换行
+ 101   1              if(x > 120)
+ 102   1              {
+ 103   2                      x = 0;
+ 104   2                      y++;
+ 105   2              }
+ 106   1      
+ 107   1              OLED_Set_Pos(x,y);
+ 108   1              for(i = 0;i < 8;i++)
+ 109   1                      Write_Dat(Table_Num[num * 16 + i]);
+ 110   1              OLED_Set_Pos(x,y + 1);
+ 111   1              for(i = 0;i <8;i++)
+ 112   1                      Write_Dat(Table_Num[num * 16 + i + 8]);
+ 113   1              
+ 114   1      //      x += 8; 
+ 115   1      }
+ 116          
+C51 COMPILER V9.00   OLED                                                                  09/02/2017 17:26:31 PAGE 3   
+
+ 117          //OLED显示一个4位数
+ 118          //x，y为首位所在坐标
+ 119          //num取值范围：0~9999
+ 120          void OLED_Num(uchar x,uchar y,uint num)
+ 121          {
+ 122   1              uint a,b,c,d;
+ 123   1              
+ 124   1              if((num > 0) || (num < 9999))
+ 125   1              {
+ 126   2                      a = num / 1000;
+ 127   2                      b = num % 1000 / 100;
+ 128   2                      c = num % 1000 % 100 / 10;
+ 129   2                      d = num % 1000 % 100 % 10;
+ 130   2      
+ 131   2                      OLED_Showmun(x,y,a);
+ 132   2                      x += 8;
+ 133   2                      OLED_Showmun(x,y,b);
+ 134   2                      x += 8;
+ 135   2                      OLED_Showmun(x,y,c);
+ 136   2                      x += 8;
+ 137   2                      OLED_Showmun(x,y,d);
+ 138   2              }
+ 139   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    750    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =    160      19
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

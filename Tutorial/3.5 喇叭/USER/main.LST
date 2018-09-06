@@ -1,0 +1,45 @@
+C51 COMPILER V9.00   MAIN                                                                  11/20/2017 20:38:17 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil_v4\C51\BIN\C51.EXE main.c BROWSE INCDIR(..\HARDWARE\BORN) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*------------------------*/
+   2          //傀儡师实验板配套例程
+   3          //实验名称：喇叭
+   4          //作者：zhong
+   5          //工程建立时间：2017年7月28日
+   6          //最后修改时间：2017年8月27日
+   7          //配套教程版本：V1.0
+   8          /*------------------------*/
+   9          
+  10          #include "stc12.h"
+  11          #include "born.h"
+  12          #include "music.h"
+  13          
+  14          void main()
+  15          {
+  16   1              Born_Init();
+  17   1      
+  18   1              while(1)
+  19   1              {
+  20   2                      Music(LittleStar);
+  21   2              }
+  22   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     14    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

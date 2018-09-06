@@ -1,0 +1,89 @@
+C51 COMPILER V9.00   STEERING                                                              11/07/2017 20:49:34 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE STEERING
+OBJECT MODULE PLACED IN .\steering.obj
+COMPILER INVOKED BY: C:\Keil_v4\C51\BIN\C51.EXE ..\HARDWARE\STEERING\steering.c BROWSE INCDIR(..\HARDWARE\STEERING) DEBU
+                    -G OBJECTEXTEND PRINT(.\steering.lst) OBJECT(.\steering.obj)
+
+line level    source
+
+   1          #include "stc12.h"
+   2          #include "steering.h"
+   3          
+   4          //舵机初始化函数
+   5          void Steering_Init(void)
+   6          {
+   7   1              CCON = 0X00;//初始化CCON
+   8   1                                //关闭PCA计数器
+   9   1                                //清除PCA阵列溢出标志位CF
+  10   1                                //清除模块0、模块1中断标志位CCF0、CCF1
+  11   1      
+  12   1              AUXR1 = 0X7F;//输出翻转，从P4.2和P4.3输出
+  13   1      
+  14   1              CL = 0;//清零计数器
+  15   1              CH = 0;
+  16   1      
+  17   1              CMOD = 0X04;//设置PCA工作模式
+  18   1                              //空闲模式下PCA计数器继续工作
+  19   1                                      //PCA计数器计数频率取决于定时器0溢出率
+  20   1                                      //关闭PCA计数器溢出中断
+  21   1      
+  22   1              CCAP0H = CCAP0L = 0XE0;//PWM0输出频率为50Hz占空比为5%的PWM信号,在P4.2输出
+  23   1              CCAPM0 = 0X42;//模块0为PWM输出模式
+  24   1                                        //没有PCA中断
+  25   1      
+  26   1              CCAP1H = CCAP1L = 0XE0;//PWM1输出频率为50Hz占空比为5%的PWM信号,在P4.3输出
+  27   1              CCAPM1 = 0X42;//模块1为PWM输出模式
+  28   1                                        //没有PCA中断
+  29   1      
+  30   1              CR = 1;//启动PCA计数器
+  31   1      }
+  32          
+  33          //定时器0初始化函数
+  34          void Timer0_Init(void)
+  35          {
+  36   1              TMOD = 0X02;
+  37   1      
+  38   1              TL0 = TH0 = 256 - 78;
+  39   1      
+  40   1              TR0 = 1;
+  41   1              ET0 = 1;
+  42   1              EA = 1; 
+  43   1      }
+  44          
+  45          //舵机1角度控制函数，180°分25等份每份约7度，即angle1越大转的角度越大，angle1取值范围为0~25
+  46          //初始化时舵机的角度为0°
+  47          void Steering1(uchar angle1)
+  48          {
+  49   1              CCAP0H = CCAP0L = 0XE0 + angle1;
+  50   1      }
+  51          
+  52          //舵机2角度控制函数，180°分25等份每份约7度，即angle2越大转的角度越大，angle2取值范围为0~25
+  53          //初始化时舵机的角度为0°
+  54          void Steering2(uchar angle2)
+C51 COMPILER V9.00   STEERING                                                              11/07/2017 20:49:34 PAGE 2   
+
+  55          {
+  56   1              CCAP1H = CCAP1L = 0XE0 + angle2;
+  57   1      }
+  58          
+  59          void Steering_Test(void)
+  60          {
+  61   1               Steering1(2);
+  62   1               Steering2(12);
+  63   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     76    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

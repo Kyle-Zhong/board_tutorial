@@ -1,0 +1,4 @@
+"main.obj",
+".\digitron.obj" 
+TO "数码管-动态显示" 
+RAMSIZE(256) 

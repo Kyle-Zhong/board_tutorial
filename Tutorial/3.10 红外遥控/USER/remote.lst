@@ -1,0 +1,211 @@
+C51 COMPILER V9.00   REMOTE                                                                10/06/2017 16:24:56 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE REMOTE
+OBJECT MODULE PLACED IN .\remote.obj
+COMPILER INVOKED BY: C:\Keil_v4\C51\BIN\C51.EXE ..\HARDWARE\REMOTE\remote.c LARGE BROWSE INCDIR(..\HARDWARE\REMOTE;..\HA
+                    -RDWARE\DIGITRON) DEBUG OBJECTEXTEND PRINT(.\remote.lst) OBJECT(.\remote.obj)
+
+line level    source
+
+   1          #include "stc12.h"
+   2          #include "remote.h"
+   3          #include "digitron.h"
+   4          
+   5          uchar retime;//记录高电平时间
+   6          uchar bitnum;//数据的位数
+   7          uchar startflag;//红外接收开始标志位
+   8          uchar reciveflag;//红外数据接收完成标志位
+   9          uchar finishflag;//红外数据处理完成标志位
+  10          
+  11          uchar redata[33];//存放红外数据
+  12          uchar recode[4];//存放用户码和4个键值
+  13          
+  14          uchar num = 0;//
+  15          
+  16          //定时器0初始化函数
+  17          void Timer0_Init(void)
+  18          {
+  19   1              TMOD = 0X02;//设置成工作方式2
+  20   1              TH0 = TL0 = 0;
+  21   1      
+  22   1              ET0 = 1;//打开定时器0中断
+  23   1              EA = 1;//打开总中断
+  24   1              TR0 = 1;//启动定时器
+  25   1      }
+  26          
+  27          //定时器0中断服务函数
+  28          void Timer0_Handler(void) interrupt 1
+  29          {
+  30   1              retime++;
+  31   1      }
+  32          
+  33          //外部中断0初始化函数
+  34          void Init0_Init(void)
+  35          {
+  36   1              IT0 = 1;//设置成下降沿触发
+  37   1              EX0 = 1;//打开外部中断0
+  38   1              EA = 1;//打开总中断
+  39   1      }
+  40          
+  41          //外部中断0服务函数
+  42          void Init0_Handler(void) interrupt 0
+  43          {
+  44   1              //如果已经是在接收当中，则继续接收
+  45   1              if(startflag)
+  46   1              {
+  47   2                      //检测到用户码，开始接收数据
+  48   2                      if(retime < 63 && retime > 32)
+  49   2                              bitnum = 0;
+  50   2      
+  51   2                      redata[bitnum] = retime;//记录每次高电平的时间
+  52   2                      retime = 0;
+  53   2                      bitnum++;
+  54   2      
+C51 COMPILER V9.00   REMOTE                                                                10/06/2017 16:24:56 PAGE 2   
+
+  55   2                      if(bitnum == 33)//判断是否接收完成
+  56   2                      {
+  57   3                              bitnum = 0;
+  58   3                              reciveflag = 1;//置1接收完成标志位，表示接收已经完成
+  59   3                      }
+  60   2              }
+  61   1              else//否则开始接收
+  62   1              {
+  63   2                      startflag = 1;//置1开始标志位
+  64   2                      retime = 0;
+  65   2              }
+  66   1      }
+  67          
+  68          //红外数据处理函数
+  69          void Remote_Handler(void)
+  70          {
+  71   1              uchar k,x,y;
+  72   1              uchar value;
+  73   1      
+  74   1              k = 1;
+  75   1      
+  76   1              for(x = 0;x < 4;x++)//取4组数据
+  77   1              {
+  78   2                      for(y = 0;y <= 8;y++)//每组数据8位
+  79   2                      {
+  80   3                              value >>= 1;
+  81   3      
+  82   3                              //判断红外数据是1还是0
+  83   3                              //如果高电平时间大于6*255us即1.53ms，则为高电平
+  84   3                              if(redata[k] > 7)
+  85   3                                      value |= 0X80;
+  86   3      
+  87   3                              k++;
+  88   3                      }
+  89   2      
+  90   2                      recode[x] = value;
+  91   2                      value = 0;
+  92   2              }
+  93   1      
+  94   1              finishflag = 1;//置1处理完成标志位
+  95   1      }
+  96          
+  97          //红外键值判断函数
+  98          uchar Remote_Count(void)
+  99          {
+ 100   1              uchar key;
+ 101   1              
+ 102   1              switch(recode[2])
+ 103   1              {
+ 104   2                      case 34  : key = 0;
+ 105   2                              break;
+ 106   2                      case 97  : key = 1;
+ 107   2                              break;
+ 108   2                      case 227 : key = 2;
+ 109   2                              break;
+ 110   2                      case 43  : key = 3;
+ 111   2                              break;
+ 112   2                      case 225 : key = 4;
+ 113   2                              break;
+ 114   2                      case 99  : key = 5;
+ 115   2                              break;
+ 116   2                      case 171 : key = 6;
+C51 COMPILER V9.00   REMOTE                                                                10/06/2017 16:24:56 PAGE 3   
+
+ 117   2                              break;
+ 118   2                      case 168 : key = 7;
+ 119   2                              break;
+ 120   2                      case 170 : key = 8;
+ 121   2                              break;
+ 122   2                      case 169 : key = 9;
+ 123   2                              break;
+ 124   2                      default : key = 9;
+ 125   2              }
+ 126   1      
+ 127   1              return key;     
+ 128   1      }
+ 129          
+ 130          //红外遥控解码函数
+ 131          //在数码管上显示键值
+ 132          uint Remote_Work(void)
+ 133          {
+ 134   1              if(reciveflag == 1)
+ 135   1              {
+ 136   2                      reciveflag =0;
+ 137   2                      Remote_Handler();
+ 138   2              }
+ 139   1              if(finishflag == 1)
+ 140   1              {
+ 141   2                      finishflag = 0;
+ 142   2                      num = Remote_Count();
+ 143   2              }
+ 144   1      
+ 145   1              Digi_Num(num);
+ 146   1      
+ 147   1              return num;
+ 148   1      }
+ 149          
+ 150          //红外遥控控制LED函数
+ 151          void Remote_ConLED(void)
+ 152          {
+ 153   1              uint key;
+ 154   1      
+ 155   1              key = Remote_Work();
+ 156   1      
+ 157   1              switch(key)
+ 158   1              {
+ 159   2                      case 0 : P0 = 0XFF;
+ 160   2                              break;
+ 161   2                      case 1 : P0 = 0X7F;
+ 162   2                              break;
+ 163   2                      case 2 : P0 = 0XBF;
+ 164   2                              break;
+ 165   2                      case 3 : P0 = 0XDF;
+ 166   2                              break;
+ 167   2                      case 4 : P0 = 0XEF;
+ 168   2                              break;
+ 169   2                      case 5 : P0 = 0XF7;
+ 170   2                              break;
+ 171   2                      case 6 : P0 = 0XFB;
+ 172   2                              break;
+ 173   2                      case 7 : P0 = 0XFD;
+ 174   2                              break;
+ 175   2                      case 8 : P0 = 0XFE;
+ 176   2                              break;
+ 177   2                      case 9 : P0 = 0X00;
+ 178   2                              break;
+C51 COMPILER V9.00   REMOTE                                                                10/06/2017 16:24:56 PAGE 4   
+
+ 179   2                      default : P0 = 0XFF;
+ 180   2              }
+ 181   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    415    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     43    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

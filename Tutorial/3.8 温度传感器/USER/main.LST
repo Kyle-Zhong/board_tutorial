@@ -1,0 +1,47 @@
+C51 COMPILER V9.00   MAIN                                                                  11/21/2017 23:47:31 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil_v4\C51\BIN\C51.EXE main.c LARGE BROWSE INCDIR(..\HARDWARE\TEMP;..\HARDWARE\DIGITRON) DEBUG 
+                    -OBJECTEXTEND
+
+line level    source
+
+   1          /*------------------------*/
+   2          //傀儡师实验板配套例程
+   3          //实验名称：温度传感器
+   4          //作者：zhong
+   5          //工程建立时间：2017年7月28日
+   6          //最后修改时间：2017年8月4日
+   7          //配套教程版本：V1.0
+   8          /*------------------------*/
+   9          
+  10          #include "stc12.h"
+  11          #include "temp.h"
+  12          #include "digitron.h"
+  13          
+  14          void main()
+  15          {
+  16   1              Digi_Init();
+  17   1              Temp_Init();
+  18   1      
+  19   1              while(1)
+  20   1              {
+  21   2                      Temp_Show();
+  22   2              }
+  23   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     11    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

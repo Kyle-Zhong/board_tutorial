@@ -1,0 +1,318 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/03/2017  17:17:17  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V4\C51\BIN\BL51.EXE main.obj, .\rgbled.obj TO RGBLED RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  main.obj (MAIN)
+  .\rgbled.obj (RGBLED)
+  C:\KEIL_V4\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V4\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL_V4\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  RGBLED (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0009H     UNIT         _DATA_GROUP_
+            DATA    0011H     0003H     UNIT         ?DT?RGBLED
+                    0014H     000CH                  *** GAP ***
+            DATA    0020H     0001H     BIT_ADDR     ?BA?RGBLED
+            IDATA   0021H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     02D3H     UNIT         ?PR?_SEND_DATA?RGBLED
+            CODE    02D6H     00B8H     UNIT         ?PR?RGBLED_TEST?RGBLED
+            CODE    038EH     008CH     UNIT         ?C_C51STARTUP
+            CODE    041AH     0022H     UNIT         ?PR?_DELAY_MS?RGBLED
+            CODE    043CH     0019H     UNIT         ?C?LIB_CODE
+            CODE    0455H     0018H     UNIT         ?PR?_RGBLED_SET?RGBLED
+            CODE    046DH     000EH     UNIT         ?PR?RGBLED_REST?RGBLED
+            CODE    047BH     0008H     UNIT         ?PR?MAIN?MAIN
+            CODE    0483H     0006H     UNIT         ?C_INITSEG
+            CODE    0489H     0004H     UNIT         ?PR?RGBLED_INIT?RGBLED
+
+
+
+OVERLAY MAP OF MODULE:   RGBLED (MAIN)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                  -----    -----
+  +--> ?PR?RGBLED_INIT?RGBLED
+  +--> ?PR?RGBLED_TEST?RGBLED
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/03/2017  17:17:17  PAGE 2
+
+
+?PR?RGBLED_TEST?RGBLED         0008H    0006H
+  +--> ?PR?_RGBLED_SET?RGBLED
+  +--> ?PR?_DELAY_MS?RGBLED
+
+?PR?_RGBLED_SET?RGBLED         -----    -----
+  +--> ?PR?RGBLED_REST?RGBLED
+  +--> ?PR?_SEND_DATA?RGBLED
+
+?PR?_SEND_DATA?RGBLED          000EH    0003H
+
+
+
+SYMBOL TABLE OF MODULE:  RGBLED (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  C:047BH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:047BH         LINE#         13
+  C:047BH         LINE#         14
+  C:047BH         LINE#         15
+  C:047EH         LINE#         17
+  C:047EH         LINE#         18
+  C:047EH         LINE#         19
+  C:0481H         LINE#         20
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        RGBLED
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:0020H         PUBLIC        LED_DAT
+  D:00B8H         PUBLIC        IP
+  B:00B0H.5       PUBLIC        DATA
+  D:00D8H         PUBLIC        CCON
+  C:0489H         PUBLIC        RGBLED_Init
+  D:00BBH         PUBLIC        P4SW
+  C:046DH         PUBLIC        RGBLED_Rest
+  C:041EH         PUBLIC        _Delay_ms
+  D:0098H         PUBLIC        SCON
+  C:02D6H         PUBLIC        RGBLED_Test
+  D:0088H         PUBLIC        TCON
+  C:045BH         PUBLIC        _RGBLED_Set
+  D:0011H         PUBLIC        RGB_DATA
+  C:0003H         PUBLIC        _Send_Data
+  B:0020H.0       PUBLIC        bit0
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/03/2017  17:17:17  PAGE 3
+
+
+  B:0020H.1       PUBLIC        bit1
+  B:0020H.2       PUBLIC        bit2
+  B:0020H.3       PUBLIC        bit3
+  B:0020H.4       PUBLIC        bit4
+  B:0020H.5       PUBLIC        bit5
+  B:0020H.6       PUBLIC        bit6
+  B:0020H.7       PUBLIC        bit7
+  D:00D0H         PUBLIC        PSW
+  C:041AH         SYMBOL        L?0096
+  -------         PROC          L?0095
+  -------         ENDPROC       L?0095
+  C:041AH         SYMBOL        L?0096
+  -------         PROC          _DELAY_MS
+  D:0006H         SYMBOL        z
+  -------         DO            
+  D:0006H         SYMBOL        x
+  D:0004H         SYMBOL        y
+  -------         ENDDO         
+  C:041EH         LINE#         18
+  C:041EH         LINE#         19
+  C:041EH         LINE#         22
+  C:0427H         LINE#         23
+  C:043BH         LINE#         24
+  -------         ENDPROC       _DELAY_MS
+  -------         PROC          RGBLED_REST
+  -------         DO            
+  D:0006H         SYMBOL        x
+  -------         ENDDO         
+  C:046DH         LINE#         27
+  C:046DH         LINE#         28
+  C:046DH         LINE#         30
+  C:047AH         LINE#         31
+  -------         ENDPROC       RGBLED_REST
+  -------         PROC          _SEND_DATA
+  D:000EH         SYMBOL        dat
+  C:0003H         LINE#         34
+  C:0009H         LINE#         35
+  C:0009H         LINE#         36
+  C:0018H         LINE#         37
+  C:001BH         LINE#         38
+  C:002AH         LINE#         40
+  C:0034H         LINE#         41
+  C:0037H         LINE#         42
+  C:0046H         LINE#         44
+  C:0050H         LINE#         45
+  C:0053H         LINE#         46
+  C:0062H         LINE#         48
+  C:006CH         LINE#         49
+  C:006FH         LINE#         50
+  C:007EH         LINE#         52
+  C:0088H         LINE#         53
+  C:008BH         LINE#         54
+  C:009AH         LINE#         56
+  C:00A4H         LINE#         57
+  C:00A7H         LINE#         58
+  C:00B6H         LINE#         60
+  C:00C0H         LINE#         61
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/03/2017  17:17:17  PAGE 4
+
+
+  C:00C3H         LINE#         62
+  C:00D2H         LINE#         64
+  C:00DCH         LINE#         65
+  C:00DFH         LINE#         66
+  C:00EEH         LINE#         68
+  C:00F8H         LINE#         70
+  C:010BH         LINE#         71
+  C:010EH         LINE#         72
+  C:011DH         LINE#         74
+  C:0127H         LINE#         75
+  C:012AH         LINE#         76
+  C:0139H         LINE#         78
+  C:0143H         LINE#         79
+  C:0146H         LINE#         80
+  C:0155H         LINE#         82
+  C:015FH         LINE#         83
+  C:0162H         LINE#         84
+  C:0171H         LINE#         86
+  C:017BH         LINE#         87
+  C:017EH         LINE#         88
+  C:018DH         LINE#         90
+  C:0197H         LINE#         91
+  C:019AH         LINE#         92
+  C:01A9H         LINE#         94
+  C:01B3H         LINE#         95
+  C:01B6H         LINE#         96
+  C:01C5H         LINE#         98
+  C:01CFH         LINE#         99
+  C:01D2H         LINE#         100
+  C:01E1H         LINE#         102
+  C:01EBH         LINE#         104
+  C:01F6H         LINE#         105
+  C:01F9H         LINE#         106
+  C:0208H         LINE#         108
+  C:0212H         LINE#         109
+  C:0215H         LINE#         110
+  C:0224H         LINE#         112
+  C:022EH         LINE#         113
+  C:0231H         LINE#         114
+  C:0240H         LINE#         116
+  C:024AH         LINE#         117
+  C:024DH         LINE#         118
+  C:025CH         LINE#         120
+  C:0266H         LINE#         121
+  C:0269H         LINE#         122
+  C:0278H         LINE#         124
+  C:0282H         LINE#         125
+  C:0285H         LINE#         126
+  C:0294H         LINE#         128
+  C:029EH         LINE#         129
+  C:02A1H         LINE#         130
+  C:02B0H         LINE#         132
+  C:02BAH         LINE#         133
+  C:02BDH         LINE#         134
+  C:02CBH         LINE#         136
+  C:02D5H         LINE#         137
+  -------         ENDPROC       _SEND_DATA
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/03/2017  17:17:17  PAGE 5
+
+
+  -------         PROC          RGBLED_INIT
+  C:0489H         LINE#         139
+  C:0489H         LINE#         140
+  C:0489H         LINE#         141
+  C:048CH         LINE#         142
+  -------         ENDPROC       RGBLED_INIT
+  C:0455H         SYMBOL        L?0094
+  -------         PROC          L?0093
+  -------         ENDPROC       L?0093
+  C:0455H         SYMBOL        L?0094
+  -------         PROC          _RGBLED_SET
+  D:0007H         SYMBOL        R
+  D:0005H         SYMBOL        G
+  D:0003H         SYMBOL        B
+  C:045BH         LINE#         146
+  C:045BH         LINE#         147
+  C:045BH         LINE#         148
+  C:045DH         LINE#         149
+  C:045FH         LINE#         150
+  C:0461H         LINE#         152
+  C:0464H         LINE#         153
+  -------         ENDPROC       _RGBLED_SET
+  -------         PROC          RGBLED_TEST
+  -------         DO            
+  D:0008H         SYMBOL        r
+  D:000AH         SYMBOL        g
+  D:000CH         SYMBOL        b
+  -------         ENDDO         
+  C:02D6H         LINE#         157
+  C:02D6H         LINE#         158
+  C:02D6H         LINE#         159
+  C:02DCH         LINE#         161
+  C:02E1H         LINE#         162
+  C:02E1H         LINE#         163
+  C:02E4H         LINE#         165
+  C:02E7H         LINE#         166
+  C:02F8H         LINE#         168
+  C:02FEH         LINE#         169
+  C:02FEH         LINE#         170
+  C:0301H         LINE#         172
+  C:0304H         LINE#         173
+  C:0317H         LINE#         175
+  C:031CH         LINE#         176
+  C:031CH         LINE#         177
+  C:031FH         LINE#         179
+  C:0322H         LINE#         180
+  C:0333H         LINE#         182
+  C:0339H         LINE#         183
+  C:0339H         LINE#         184
+  C:033CH         LINE#         186
+  C:033FH         LINE#         187
+  C:0352H         LINE#         189
+  C:0357H         LINE#         190
+  C:0357H         LINE#         191
+  C:035AH         LINE#         193
+  C:035DH         LINE#         194
+  C:036EH         LINE#         196
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/03/2017  17:17:17  PAGE 6
+
+
+  C:0374H         LINE#         197
+  C:0374H         LINE#         198
+  C:0377H         LINE#         200
+  C:037AH         LINE#         201
+  C:038DH         LINE#         202
+  -------         ENDPROC       RGBLED_TEST
+  -------         ENDMOD        RGBLED
+
+  -------         MODULE        ?C?CLDPTR
+  C:043CH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+Program Size: data=22.0 xdata=0 code=1165
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

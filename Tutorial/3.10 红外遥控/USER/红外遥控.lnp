@@ -1,0 +1,5 @@
+"main.obj",
+".\remote.obj",
+".\digitron.obj" 
+TO "КьЭтвЃПи" 
+RAMSIZE(256) 

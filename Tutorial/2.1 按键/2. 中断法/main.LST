@@ -1,0 +1,75 @@
+C51 COMPILER V9.00   MAIN                                                                  08/04/2017 18:17:14 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil_v4\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*------------------------*/
+   2          //傀儡师实验板配套例程
+   3          //实验名称：按键-中断法
+   4          //作者：zhong
+   5          //工程建立时间：2017年7月28日
+   6          //最后修改时间：2017年8月4日
+   7          //配套教程版本：V1.0
+   8          /*------------------------*/
+   9          
+  10          #include "stc12.h"
+  11          #include "intrins.h"
+  12          
+  13          #define uint unsigned int
+  14          #define LED P0
+  15          
+  16          void Con_Init(void);
+  17          
+  18          void main()
+  19          {
+  20   1              P0 = 0XFE;
+  21   1              Con_Init();
+  22   1      
+  23   1              while(1);
+  24   1      }
+  25          
+  26          //外部中断初始化函数
+  27          void Con_Init(void)
+  28          {
+  29   1              //设置外部中断0
+  30   1              IT0 = 1;//设置外部中断0下降沿捕获
+  31   1              EX0 = 1;//打开外部中断0中断允许
+  32   1      
+  33   1              //设置外部中断1
+  34   1              IT1 = 1;// 设置外部中断1下降沿捕获
+  35   1              EX1 = 1;// 打开外部中断1中断允许
+  36   1      
+  37   1              EA = 1;//打开总中断
+  38   1      }
+  39          
+  40          //外部中断0服务函数
+  41          void Key0_Handler(void) interrupt 0
+  42          {
+  43   1              LED = _cror_(LED,1);
+  44   1      }
+  45          
+  46          //外部中断1服务函数
+  47          void Key1_Handler(void) interrupt 2
+  48          {
+  49   1              LED = _crol_(LED,1);
+  50   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     85    ----
+   CONSTANT SIZE    =   ----    ----
+C51 COMPILER V9.00   MAIN                                                                  08/04/2017 18:17:14 PAGE 2   
+
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

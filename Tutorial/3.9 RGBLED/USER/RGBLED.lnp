@@ -1,0 +1,4 @@
+"main.obj",
+".\rgbled.obj" 
+TO "RGBLED" 
+RAMSIZE(256) 

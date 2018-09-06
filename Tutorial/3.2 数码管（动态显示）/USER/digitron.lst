@@ -1,0 +1,167 @@
+C51 COMPILER V9.00   DIGITRON                                                              11/07/2017 21:43:35 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE DIGITRON
+OBJECT MODULE PLACED IN .\digitron.obj
+COMPILER INVOKED BY: C:\Keil_v4\C51\BIN\C51.EXE ..\HARDWARE\DIGITRON\digitron.c BROWSE INCDIR(..\HARDWARE\DIGITRON) DEBU
+                    -G OBJECTEXTEND PRINT(.\digitron.lst) OBJECT(.\digitron.obj)
+
+line level    source
+
+   1          #include "stc12.h"
+   2          #include "digitron.h"
+   3          
+   4          /*---------------------------------
+   5          编号-显示    编号-显示    编号-显示
+   6           0  - 0           12 - C           24 - O
+   7           1      - 1               13 - D           25 - P
+   8           2      - 2               14 - E           26 - Q
+   9           3      - 3               15 - F           27 - R
+  10           4      - 4               16 - G           28 - S
+  11           5      - 5               17 - H           29 - T
+  12           6      - 6               18 - I           30 - U
+  13           7      - 7               19 - J           31 - V
+  14           8      - 8               20 - K           32 - W
+  15           9      - 9               21 - L           33 - X
+  16           10     - A               22 - M           34 - Y
+  17           11     - B               23 - N           35 - Z
+  18          ----------------------------------*/
+  19          
+  20          //8段数码管段选码
+  21          uchar code table[] = 
+  22          {
+  23          0XC0,0XF9,0XA4,0XB0,
+  24          0X99,0X92,0X82,0XF8,
+  25          0X80,0X90,0X88,0X83,
+  26          0XC6,0XA1,0X86,0X8E
+  27          };
+  28          
+  29          //米字数码管段选1
+  30          uchar code table1[] = 
+  31          {
+  32          0XC0,0XF9,0XE4,0X39,0XD9,0XD2,
+  33          0X3D,0X07,0XC0,0XD0,0XC8,0XC3,   
+  34          0XC6,0XE1,0XC6,0XCE,0XC2,0XC9,          
+  35          0XF6,0XFF,0XFF,0XC7,0XC9,0XC9,          
+  36          0XC0,0XCC,0XC0,0XCC,0XD2,0XFE,          
+  37          0XC1,0XFF,0XC9,0XFF,0XFF,0XF6   
+  38          };
+  39          
+  40          //米字数码管段选2
+  41          uchar code table2[] = 
+  42          {
+  43          0XFF,0XFF,0XE7,0XE7,0XE7,0XE7,
+  44          0XE7,0XFF,0XE7,0XE7,0XE7,0XE7,                  
+  45          0XFF,0XE7,0XE7,0XE7,0XDF,0XE7,
+  46          0XBD,0XFF,0X39,0XFF,0XF9,0X7E,
+  47          0XFF,0XE7,0XEF,0X67,0XE7,0XBD,
+  48          0XFF,0XFF,0X5F,0X5C,0XBA,0XDB
+  49          };
+  50          
+  51          void Digi_Init(void)
+  52          {
+  53   1              P4SW = 0X30;
+  54   1      }
+C51 COMPILER V9.00   DIGITRON                                                              11/07/2017 21:43:35 PAGE 2   
+
+  55          
+  56          //数码管动态按位显示函数
+  57          //a、b、c、d分别为从左到右4个数码管的4个位选，1有效
+  58          //num1、num2、num3、num4分别为四个数码管的段选，其中num1取值范围为0~35，num2、num3、num4取值范围分别为0~15
+  59          void Digi_Show(uchar a,uchar num1,uchar b,uchar num2,uchar c,uchar num3,uchar d,uchar num4)
+  60          {
+  61   1              DIG1 = !a;
+  62   1              DIG2 = 1;
+  63   1              DIG3 = 1;
+  64   1              DIG4 = 1;               
+  65   1      
+  66   1              EN1 = 1;
+  67   1              P2 = table1[num1];
+  68   1              EN1 = 0;
+  69   1              
+  70   1              Delay_ms(2);
+  71   1      
+  72   1              EN2 = 1;
+  73   1              P2 = table2[num1];
+  74   1              EN2 = 0;
+  75   1      
+  76   1              Delay_ms(2);
+  77   1      
+  78   1              DIG1 = 1;
+  79   1              DIG2 = !b;
+  80   1              DIG3 = 1;
+  81   1              DIG4 = 1;
+  82   1      
+  83   1              EN1 = 1;
+  84   1              P2 = table[num2];
+  85   1              EN1 = 0;
+  86   1              
+  87   1              Delay_ms(2);
+  88   1      
+  89   1              DIG1 = 1;
+  90   1              DIG2 = 1;
+  91   1              DIG3 = !c;
+  92   1              DIG4 = 1;
+  93   1      
+  94   1              EN1 = 1;
+  95   1              P2 = table[num3];
+  96   1              EN1 = 0;
+  97   1      
+  98   1              Delay_ms(2);
+  99   1      
+ 100   1              DIG1 = 1;
+ 101   1              DIG2 = 1;
+ 102   1              DIG3 = 1;
+ 103   1              DIG4 = !d;
+ 104   1      
+ 105   1              EN1 = 1;
+ 106   1              P2 = table[num4];
+ 107   1              EN1 = 0;
+ 108   1      
+ 109   1              Delay_ms(2);
+ 110   1      }
+ 111          
+ 112          //数码管整数显示函数
+ 113          //给函数一个变量，能在数码管上显示出来
+ 114          //变量取值范围：0~9999
+ 115          void Digi_Num(uint num)
+ 116          {
+C51 COMPILER V9.00   DIGITRON                                                              11/07/2017 21:43:35 PAGE 3   
+
+ 117   1              uchar a,b,c,d;//从num分离出来的千位、百位、十位和个位
+ 118   1              
+ 119   1              if((num > 0) || (num < 9999))
+ 120   1              {
+ 121   2                      a = num / 1000;
+ 122   2                      b = num % 1000 / 100;
+ 123   2                      c = num % 1000 % 100 / 10;
+ 124   2                      d = num % 1000 % 100 % 10;
+ 125   2      
+ 126   2                      Digi_Show(1,a,1,b,1,c,1,d);
+ 127   2              }
+ 128   1              else
+ 129   1                      Digi_Show(1,9,1,9,1,9,1,9);     
+ 130   1      }
+ 131          
+ 132          //毫秒延时函数，误差2us
+ 133          void Delay_ms(uint z)
+ 134          {
+ 135   1              uint x,y;
+ 136   1      
+ 137   1              for(x = z;x > 0;x--)
+ 138   1                      for(y = 921;y > 0;y--);
+ 139   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    346    ----
+   CONSTANT SIZE    =     88    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      11
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

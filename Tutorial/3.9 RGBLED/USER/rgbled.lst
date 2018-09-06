@@ -1,0 +1,232 @@
+C51 COMPILER V9.00   RGBLED                                                                11/03/2017 17:17:16 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE RGBLED
+OBJECT MODULE PLACED IN .\rgbled.obj
+COMPILER INVOKED BY: C:\Keil_v4\C51\BIN\C51.EXE ..\HARDWARE\RGBLED\rgbled.c BROWSE INCDIR(..\HARDWARE\RGBLED) DEBUG OBJE
+                    -CTEXTEND PRINT(.\rgbled.lst) OBJECT(.\rgbled.obj)
+
+line level    source
+
+   1          #include "stc12.h"
+   2          #include "intrins.h"
+   3          #include "rgbled.h"
+   4          
+   5          uchar bdata LED_DAT;
+   6          sbit bit0 = LED_DAT^0;
+   7          sbit bit1 = LED_DAT^1;
+   8          sbit bit2 = LED_DAT^2;
+   9          sbit bit3 = LED_DAT^3;
+  10          sbit bit4 = LED_DAT^4;
+  11          sbit bit5 = LED_DAT^5;
+  12          sbit bit6 = LED_DAT^6;
+  13          sbit bit7 = LED_DAT^7;
+  14          
+  15          uchar RGB_DATA[3] = {0x00,0x00,0X00};
+  16          
+  17          //毫秒延时函数，误差2us
+  18          void Delay_ms(uint z)
+  19          {
+  20   1              uint x,y;
+  21   1      
+  22   1              for(x = z;x > 0;x--)
+  23   1                      for(y = 921;y > 0;y--);
+  24   1      }
+  25          
+  26          //RGBLED复位函数
+  27          void RGBLED_Rest(void)
+  28          {
+  29   1              uint x;
+  30   1              for(x = 50;x > 0;x--);
+  31   1      }
+  32          
+  33          //RGBLED数据发送函数
+  34          void Send_Data(uchar *dat)
+  35          {
+  36   1              LED_DAT = *dat++;
+  37   1              if(bit7 == 1)
+  38   1                      CODE1
+  39   1              else
+  40   1                      CODE0
+  41   1              if(bit6 == 1)
+  42   1                      CODE1
+  43   1              else
+  44   1                      CODE0
+  45   1              if(bit5 == 1)
+  46   1                      CODE1
+  47   1              else
+  48   1                      CODE0
+  49   1              if(bit4 == 1)
+  50   1                      CODE1
+  51   1              else
+  52   1                      CODE0
+  53   1              if(bit3 == 1)
+  54   1                      CODE1
+C51 COMPILER V9.00   RGBLED                                                                11/03/2017 17:17:16 PAGE 2   
+
+  55   1              else
+  56   1                      CODE0
+  57   1              if(bit2 == 1)
+  58   1                      CODE1
+  59   1              else
+  60   1                      CODE0;
+  61   1              if(bit1 == 1)
+  62   1                      CODE1
+  63   1              else
+  64   1                      CODE0
+  65   1              if(bit0 == 1)
+  66   1                      CODE1
+  67   1              else
+  68   1                      CODE0
+  69   1      
+  70   1              LED_DAT = *dat++;
+  71   1              if(bit7 == 1)
+  72   1                      CODE1
+  73   1              else
+  74   1                      CODE0
+  75   1              if(bit6 == 1)
+  76   1                      CODE1
+  77   1              else
+  78   1                      CODE0
+  79   1              if(bit5 == 1)
+  80   1                      CODE1
+  81   1              else
+  82   1                      CODE0;
+  83   1              if(bit4 == 1)
+  84   1                      CODE1
+  85   1              else
+  86   1                      CODE0;
+  87   1              if(bit3 == 1)
+  88   1                      CODE1
+  89   1              else
+  90   1                      CODE0
+  91   1              if(bit2 == 1)
+  92   1                      CODE1
+  93   1              else
+  94   1                      CODE0;
+  95   1              if(bit1 == 1)
+  96   1                      CODE1
+  97   1              else
+  98   1                      CODE0;
+  99   1              if(bit0 == 1)
+ 100   1                      CODE1
+ 101   1              else
+ 102   1                      CODE0
+ 103   1      
+ 104   1              LED_DAT = *dat;
+ 105   1              if(bit7 == 1)
+ 106   1                      CODE1
+ 107   1              else
+ 108   1                      CODE0
+ 109   1              if(bit6 == 1)
+ 110   1                      CODE1
+ 111   1              else
+ 112   1                      CODE0
+ 113   1              if(bit5 == 1)
+ 114   1                      CODE1
+ 115   1              else
+ 116   1                      CODE0
+C51 COMPILER V9.00   RGBLED                                                                11/03/2017 17:17:16 PAGE 3   
+
+ 117   1              if(bit4 == 1)
+ 118   1                      CODE1
+ 119   1              else
+ 120   1                      CODE0
+ 121   1              if(bit3 == 1)            
+ 122   1                      CODE1
+ 123   1              else
+ 124   1                      CODE0
+ 125   1              if(bit2 == 1)
+ 126   1                      CODE1
+ 127   1              else
+ 128   1                      CODE0
+ 129   1              if(bit1 == 1)
+ 130   1                      CODE1
+ 131   1              else
+ 132   1                      CODE0
+ 133   1              if(bit0 == 1)
+ 134   1                      CODE1
+ 135   1              else
+ 136   1                      CODE0                                   
+ 137   1      }
+ 138          
+ 139          void RGBLED_Init(void)
+ 140          {
+ 141   1              P4SW = 0X40;
+ 142   1      }
+ 143          
+ 144          //RGBLED设置函数
+ 145          //R、G、B分别为红色、绿色和蓝色的颜色值，取值范围为0~255
+ 146          void RGBLED_Set(uchar R,uchar G,uchar B)
+ 147          {
+ 148   1              RGB_DATA[0] = G;
+ 149   1              RGB_DATA[1] = R;
+ 150   1              RGB_DATA[2] = B;
+ 151   1      
+ 152   1              RGBLED_Rest();
+ 153   1              Send_Data(RGB_DATA);
+ 154   1      }                 
+ 155          
+ 156          //RGBLED演示
+ 157          void RGBLED_Test(void)
+ 158          {
+ 159   1              uint r = 100,g,b;
+ 160   1      
+ 161   1              for(g = 0;g < 100;g++)
+ 162   1              {
+ 163   2                      RGBLED_Set(r,g,b);
+ 164   2      
+ 165   2                      Delay_ms(5);
+ 166   2              }
+ 167   1      
+ 168   1              for(r = 100;r > 0;r--)
+ 169   1              {
+ 170   2                      RGBLED_Set(r,g,b);
+ 171   2      
+ 172   2                      Delay_ms(5);
+ 173   2              }
+ 174   1      
+ 175   1              for(b = 0;b < 100;b++)
+ 176   1              {
+ 177   2                      RGBLED_Set(r,g,b);
+ 178   2      
+C51 COMPILER V9.00   RGBLED                                                                11/03/2017 17:17:16 PAGE 4   
+
+ 179   2                      Delay_ms(5);
+ 180   2              }
+ 181   1      
+ 182   1              for(g = 100;g > 0;g--)
+ 183   1              {
+ 184   2                      RGBLED_Set(r,g,b);
+ 185   2      
+ 186   2                      Delay_ms(5);
+ 187   2              }
+ 188   1      
+ 189   1              for(r = 0;r < 100;r++)
+ 190   1              {
+ 191   2                      RGBLED_Set(r,g,b);
+ 192   2      
+ 193   2                      Delay_ms(5);
+ 194   2              }
+ 195   1      
+ 196   1              for(b = 100;b > 0;b--)
+ 197   1              {
+ 198   2                      RGBLED_Set(r,g,b);
+ 199   2      
+ 200   2                      Delay_ms(5);
+ 201   2              }
+ 202   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    983    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       9
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

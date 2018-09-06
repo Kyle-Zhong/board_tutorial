@@ -1,0 +1,150 @@
+C51 COMPILER V9.00   MOTOR                                                                 01/22/2018 14:14:23 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MOTOR
+OBJECT MODULE PLACED IN .\motor.obj
+COMPILER INVOKED BY: C:\Keil_v4\C51\BIN\C51.EXE ..\HARDWARE\MOTOR\motor.c BROWSE INCDIR(..\HARDWARE\MOTOR) DEBUG OBJECTE
+                    -XTEND PRINT(.\motor.lst) OBJECT(.\motor.obj)
+
+line level    source
+
+   1          #include "stc12.h"
+   2          #include "motor.h"
+   3          
+   4          //电机初始化函数
+   5          void Motor_Init(void)
+   6          {
+   7   1              CCON = 0X00;//初始化CCON
+   8   1                                //关闭PCA计数器
+   9   1                                //清除PCA阵列溢出标志位CF
+  10   1                                //清除模块0、模块1中断标志位CCF0、CCF1
+  11   1      
+  12   1              CL = 0;//清零计数器
+  13   1              CH = 0;
+  14   1      
+  15   1              CMOD = 0X0A;//设置PCA工作模式
+  16   1                              //空闲模式下PCA计数器继续工作
+  17   1                                      //PCA计数器计数频率为系统时钟频率的1/4
+  18   1                                      //关闭PCA计数器溢出中断
+  19   1      
+  20   1              CCAP0H = CCAP0L = 0XFF;//PWM0输出频率为11KHz占空比为0%的PWM信号,在P1.3输出
+  21   1              CCAPM0 = 0X42;//模块0为PWM输出模式
+  22   1                                        //没有PCA中断
+  23   1      
+  24   1              CCAP1H = CCAP1L = 0XFF;//PWM1输出频率为11KHz占空比为0%的PWM信号,在P1.4输出
+  25   1              CCAPM1 = 0X42;//模块1为PWM输出模式
+  26   1                                        //没有PCA中断
+  27   1      
+  28   1              CR = 1;//启动PCA计数器
+  29   1      }
+  30          
+  31          //电机1控制函数
+  32          //pos1控制电机1状态，BACK后退，STOP停止，FORW前进
+  33          //pwm1控制电机1转速，pwm1越大转速越大，取值范围为0~50
+  34          void Motor1(uchar pos1,uchar pwm1)
+  35          {
+  36   1              //判断电机状态
+  37   1              switch(pos1)
+  38   1              {
+  39   2                      case 0 : AIN1 = 1;
+  40   2                                       AIN2 = 0;
+  41   2                      break;
+  42   2                      case 1 : AIN1 = 1;
+  43   2                                       AIN2 = 1;
+  44   2                      break;
+  45   2                      case 2 : AIN1 = 0;
+  46   2                                       AIN2 = 1;
+  47   2                      break;
+  48   2                      default : AIN1 = 1;
+  49   2                                        AIN2 = 1;
+  50   2              }
+  51   1      
+  52   1              //调整电机转速
+  53   1              if(pwm1 >= 0 && pwm1 <= 50)
+  54   1              {
+C51 COMPILER V9.00   MOTOR                                                                 01/22/2018 14:14:23 PAGE 2   
+
+  55   2                      pwm1 = 250 - pwm1;
+  56   2                      
+  57   2                      CCAP0H = CCAP0L = pwm1;
+  58   2              }
+  59   1              else
+  60   1                      CCAP0H = CCAP0L = 255;
+  61   1      }
+  62          
+  63          //电机2控制函数
+  64          //pos2控制电机2状态，BACK后退，STOP停止，FORW前进
+  65          //pwm2控制电机2转速，pwm2越大转速越大，取值范围为0~50
+  66          void Motor2(uchar pos2,uchar pwm2)
+  67          {
+  68   1              //判断电机状态
+  69   1              switch(pos2)
+  70   1              {
+  71   2                      case 0 : BIN1 = 1;
+  72   2                                       BIN2 = 0;
+  73   2                      break;
+  74   2                      case 1 : BIN1 = 1;
+  75   2                                       BIN2 = 1;
+  76   2                      break;
+  77   2                      case 2 : BIN1 = 0;
+  78   2                                       BIN2 = 1;
+  79   2                      break;
+  80   2                      default : BIN1 = 1;
+  81   2                                        BIN2 = 1;
+  82   2              }
+  83   1      
+  84   1              //调整电机转速
+  85   1              if(pwm2 >= 0 && pwm2 <= 50)
+  86   1              {       
+  87   2                      pwm2 = 250 - pwm2;
+  88   2                              
+  89   2                      CCAP1H = CCAP1L = pwm2;
+  90   2              }
+  91   1              else
+  92   1                      CCAP1H = CCAP1L = 255;
+  93   1      }
+  94          
+  95          //电机驱动函数
+  96          //直接控制小车两个电机运动
+  97          void Car_Run(int speed1,int speed2)
+  98          {
+  99   1              //电机1方向控制及速度控制
+ 100   1              if(speed1 >= 0)
+ 101   1              {
+ 102   2                      Motor1(FORW,speed1);
+ 103   2              }
+ 104   1              else
+ 105   1              {
+ 106   2                      speed1 = -speed1;
+ 107   2      
+ 108   2                      Motor1(BACK,speed1);
+ 109   2              }
+ 110   1      
+ 111   1              //电机2方向控制及速度控制
+ 112   1              if(speed2 >= 0)
+ 113   1              {
+ 114   2                      Motor2(FORW,speed2);
+ 115   2              }
+ 116   1              else
+C51 COMPILER V9.00   MOTOR                                                                 01/22/2018 14:14:23 PAGE 3   
+
+ 117   1              {
+ 118   2                      speed2 = -speed2;
+ 119   2      
+ 120   2                      Motor2(BACK,speed2);
+ 121   2              }       
+ 122   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    202    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
